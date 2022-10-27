@@ -22,7 +22,7 @@ En el repositorio se encuentra un script sencillo para hacer la importación, li
 Los datos para armar la base de datos se limpiaron con `clean-database.py`. La carpeta database contiene un archivo zip que se puede descomprimir en el root de MySql para tener le database armado. Tambien se encuentra un script para hacer las conexiones.
 
 # Base de datos <a name="db"></a>
-Se armó la siguiente base de datos:
+La base de datos se armó en DBeaver de la siguiente forma:
 
 <p align="center">
   <img src="figuras/db.png">
