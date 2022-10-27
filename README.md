@@ -48,7 +48,9 @@ As the idea is to use it to compare models, some simple models are trained and u
 
 Un diagrama con los pasos anteriores se muestra a continuación,
 
-<img src="figuras/ETL_diagrama.png"/>
+<p align="center">
+  <img src="figuras/ETL_diagrama.png">
+</p>
 
 ## Correr el pipeline 
 El script se puede correr desde el terminal. Las opciones para correrlo son:
