@@ -41,8 +41,7 @@ def main():
     flags = parser.parse_args()
 
     # Conexión a mysql
-    #CLAVE = getpass.getpass('Password de MySql: ')
-    CLAVE = 'Gato:rojo123'
+    CLAVE = getpass.getpass('Password de MySql: ') 
     DB = flags.db
     my_conn = create_engine("mysql://root:{clave}@localhost/{db}".format(clave=CLAVE,db=DB))
     # postgres
