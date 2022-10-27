@@ -69,28 +69,31 @@ def main():
     # Agregamos id de semana
     # El id lo obtenemos del nombre del archivo 
     semana = FILENAME.split('_')[2].split('.')[0]
+
     df['semanaId'] = semana
 
     # Formateamos el producto id en caso de que esté en formato float
-    if type(df.producto_id[0]) == float:
+    if df.producto_id.astype(str).str.contains('.', na=True).sum() > 0:
         df.producto_id = df.producto_id.astype(str).str.replace('.0', '', regex=False)
         df.producto_id = df.producto_id.str.zfill(13)
+
+    # Formateamos el sucursal id si está en formato timestamp
+    if df.sucursal_id.str.contains('00:00:00', na=True).sum() > 0:
+        df.loc[df.sucursal_id.str.contains('00:00:00', na=True), 'sucursal_id'] = 'Sin dato'
 
     # Mapeamos el nuevo producto id a la tabla
     query = "SELECT * FROM producto_auxiliar"
     prod_aux = pd.read_sql(query,my_conn)
-    # postgres
-    #prod_aux = pd.read_sql_query(query,con=engine)
-    df = pd.merge(df, prod_aux, left_on = 'producto_id', right_on = 'antiguoId', how = 'left')
-
+    df = pd.merge(df, prod_aux, left_on = 'producto_id', right_on = 'antiguoId', how ='left')
+    df.drop(['producto_id','antiguoId'], axis='columns', inplace=True)
+    
     # Obtenemos el ultimo id en producto
-    query = "SELECT precioId FROM precios ORDER BY productoId DESC LIMIT 1"
+    query = "SELECT precioId FROM precios_1 ORDER BY productoId DESC LIMIT 1"
     last_id = pd.read_sql(query,my_conn).iloc[0,0]
-    # postgres
-    #last_id = pd.read_sql_query(query,con=engine)
+    
 
     # Agregamos los indices
-    df.insert(0, 'precioId', range(last_id, last_id + len(df)))
+    df.insert(0, 'precioId', range(last_id+1, last_id +1+ len(df)))
 
     # Manejo de nulos
     df_aux = df.loc[(df.precio.isnull())].copy()
@@ -106,7 +109,10 @@ def main():
     # Detalles 
     df.rename({'sucursal_id':'sucursalId'}, axis='columns', inplace=True)
     df.productoId = df.productoId.astype(int)
+    df_aux.rename({'sucursal_id':'sucursalId'}, axis='columns', inplace=True)
     df_aux.tipoError = df_aux.tipoError.astype(int)
+
+    df = df[['precioId','precio','productoId','sucursalId','semanaId']]
 
     print('Los datos fueron normalizados.')
 
@@ -115,14 +121,15 @@ def main():
     ########################
     
     # Cargo los precios a la tabla precios del db
-    #df.to_sql(con=my_conn, name='precios_1', if_exists='append', index=False)
+    df.to_sql(con=my_conn, name='precios_1', if_exists='append', index=False)
 
     # Cargo los datos a la tabla aux del db
-    #df_aux.to_sql(con=my_conn, name='precios_auxiliar', if_exists='append', index=False)
+    df_aux.to_sql(con=my_conn, name='precios_auxiliar', if_exists='append', index=False)
 
-    print(df.head())
+    print('Los datos fueron correctamente agregados a la base de datos.')
+    #print(df.head())
 
-    print(df_aux.head())
+    #print(df_aux.head())
 
 if __name__ == "__main__":
     main()
