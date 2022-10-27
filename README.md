@@ -57,7 +57,7 @@ El script procesa los datos siguiendo los pasos a continuación:
 Un diagrama con los pasos anteriores se muestra a continuación,
 
 <p align="center">
-  <img src="figuras/ETL_diagram.png">
+  <img src="figuras/ETL_diagrama.png">
 </p>
 
 ## Correr el pipeline 
