@@ -25,7 +25,7 @@ Los datos para armar la base de datos se limpiaron con los notebooks que se encu
 ## Pipeline
 El pipeline funciona con los datos de precio_semana proporcionados para el proyecto, que se pueden encontrar en [este link]([lhco2020.github.io/homepage/](https://drive.google.com/drive/folders/1Rsq-HHomPtQwy7RIWQ574wKcf56LiGq1)).
 
-Los archivos que utiliza el pipeline deben tener la estructura 'precios_semana_20201203.csv', donde la extension puede ser .csv, .xlsx, .json, .txt y .parquet. En caso de ser .xlsx solo debe tener información en un sheet. El archivo debe tener las siguientes columnas:
+Los archivos que utiliza el pipeline deben tener el nombre estructurado como: 'precios_semana_20201203.csv', donde la extension puede ser .csv, .xlsx, .json, .txt y .parquet. En caso de ser .xlsx solo debe tener información en un sheet. El archivo debe tener las siguientes columnas:
 
 ```
     precio: Precio del producto en pesos argentinos.
@@ -33,9 +33,7 @@ Los archivos que utiliza el pipeline deben tener la estructura 'precios_semana_2
     sucursal_id: ID de la sucursal. Los dos primeros números determinan la cadena.
 ```
 
-As the idea is to use it to compare models, some simple models are trained and used to get predictions in the pipeline. However, a .txt can be passed to the pipeline with a list of files that contains a classifier object with the true labes, scores, and predictions given by any external classifier. 
-
-`benchtools` process the data, train some models and compares them with externaly inserted ones using performance metrics. The pipeline follows these steps (figure below):
+El script procesa los datos siguiendo los pasos a continuación:
 - **Entrada**: archivo con las columnas precio, producto_id y sucursal_id.
 - **Pasos**
 1. Importar los datos
@@ -49,7 +47,7 @@ As the idea is to use it to compare models, some simple models are trained and u
 Un diagrama con los pasos anteriores se muestra a continuación,
 
 <p align="center">
-  <img src="figuras/ETL_diagrama.png">
+  <img src="figuras/ETL_diagram.png">
 </p>
 
 ## Correr el pipeline 
