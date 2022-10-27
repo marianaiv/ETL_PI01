@@ -47,6 +47,9 @@ As the idea is to use it to compare models, some simple models are trained and u
 - **Output**: Resultado del query que calcula el precio promedio de la sucursal 9-1-688
 
 Un diagrama con los pasos anteriores se muestra a continuación,
+
+<img src="figuras/ETL_diagrama.png"/>
+
 ## Correr el pipeline 
 El script se puede correr desde el terminal. Las opciones para correrlo son:
 ```
