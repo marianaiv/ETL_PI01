@@ -1,5 +1,5 @@
 '''
-Dataset:
+Dataset: https://drive.google.com/drive/folders/1Rsq-HHomPtQwy7RIWQ574wKcf56LiGq1
 '''
 
 import argparse                         # opciones para script
@@ -41,7 +41,8 @@ def main():
     flags = parser.parse_args()
 
     # Conexión a mysql
-    CLAVE = getpass.getpass('Password de MySql: ')
+    #CLAVE = getpass.getpass('Password de MySql: ')
+    CLAVE = 'Gato:rojo123'
     DB = flags.db
     my_conn = create_engine("mysql://root:{clave}@localhost/{db}".format(clave=CLAVE,db=DB))
     # postgres
@@ -57,6 +58,8 @@ def main():
 
     # cargamos el archivo a un dataframe
     df = cargar_archivo(PATH, FILENAME, SEPARATOR)
+
+    print('Los datos fueron cargado correctamente.')
     
     ########################
     #### TRANSFORMACION ####
@@ -88,7 +91,7 @@ def main():
     df.drop(['producto_id','antiguoId'], axis='columns', inplace=True)
     
     # Obtenemos el ultimo id en producto
-    query = "SELECT precioId FROM precios_1 ORDER BY productoId DESC LIMIT 1"
+    query = "SELECT precioId FROM precios ORDER BY productoId DESC LIMIT 1"
     last_id = pd.read_sql(query,my_conn).iloc[0,0]
     
 
@@ -96,19 +99,20 @@ def main():
     df.insert(0, 'precioId', range(last_id+1, last_id +1+ len(df)))
 
     # Manejo de nulos
-    df_aux = df.loc[(df.precio.isnull())].copy()
+    df_aux = df.loc[(df.precio.isnull()) | (df.precio=='')].copy()
     df_aux['tipoError'] = 0
 
     df_aux = pd.concat([df_aux, df.loc[df.productoId.isnull()].copy()])
     df_aux.loc[df_aux.productoId.isnull(), 'tipoError'] = 1
 
     # Los dropeamos
-    index = df.loc[(df.precio.isnull()) | (df.productoId.isnull())].index
+    index = df.loc[(df.precio.isnull()) | (df.productoId.isnull()) | (df.precio=='')].index
     df.drop(index, axis='index', inplace=True)
    
     # Detalles 
     df.rename({'sucursal_id':'sucursalId'}, axis='columns', inplace=True)
     df.productoId = df.productoId.astype(int)
+    df.precio = df.precio.astype(float)
     df_aux.rename({'sucursal_id':'sucursalId'}, axis='columns', inplace=True)
     df_aux.tipoError = df_aux.tipoError.astype(int)
 
@@ -121,12 +125,12 @@ def main():
     ########################
     
     # Cargo los precios a la tabla precios del db
-    df.to_sql(con=my_conn, name='precios_1', if_exists='append', index=False)
+    df.to_sql(con=my_conn, name='precios', if_exists='append', index=False)
 
     # Cargo los datos a la tabla aux del db
     df_aux.to_sql(con=my_conn, name='precios_auxiliar', if_exists='append', index=False)
 
-    print('Los datos fueron correctamente agregados a la base de datos.')
+    print('Los datos fueron agregados a la base de datos.')
     #print(df.head())
 
     #print(df_aux.head())

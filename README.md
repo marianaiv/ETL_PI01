@@ -8,6 +8,7 @@
 
 - [El proyecto](#about_project)
 - [Sobre el repositorio](#about_repo)
+- [Base de datos](#db)
 - [Script](#project)
 - [License](#license)
 
@@ -18,7 +19,16 @@ El objetivo del proyecto fue hacer un ETL sencillo a partir de un conjunto de da
 
 En el repositorio se encuentra un script sencillo para hacer la importación, limpieza y carga de los datos en una base de datos previamente armada y normalizada.
 
-Los datos para armar la base de datos se limpiaron con los notebooks que se encuentran en la carpeta `notebooks`.
+Los datos para armar la base de datos se limpiaron con `clean-database.py`. La carpeta database contiene un archivo zip que se puede descomprimir en el root de MySql para tener le database armado. Tambien se encuentra un script para hacer las conexiones.
+
+# Base de datos <a name="db"></a>
+Se armó la siguiente base de datos:
+
+<p align="center">
+  <img src="figuras/db.png">
+</p>
+
+*Nota*: la conexión entre precio y sucursal no se hizo porque hay una cantidad considerable de entradas sin dato en la tabla precios. Eliminarlos queda a juicio del que utilice la base de datos.
 
 # Script <a name="project"></a>
 > Script para importación, limpieza y carga de datos.
