@@ -33,7 +33,7 @@ La base de datos se armó en DBeaver de la siguiente forma:
 # Script <a name="project"></a>
 > Script para importación, limpieza y carga de datos.
 ## Pipeline
-El pipeline funciona con los datos de precio_semana proporcionados para el proyecto, que se pueden encontrar en [este link]([lhco2020.github.io/homepage/](https://drive.google.com/drive/folders/1Rsq-HHomPtQwy7RIWQ574wKcf56LiGq1)).
+El pipeline funciona con los datos de precio_semana proporcionados para el proyecto, que se pueden encontrar en [este link](https://drive.google.com/drive/folders/1Rsq-HHomPtQwy7RIWQ574wKcf56LiGq1).
 
 Los archivos que utiliza el pipeline deben tener el nombre estructurado como: 'precios_semana_20201203.csv', donde la extension puede ser .csv, .xlsx, .json, .txt y .parquet. En caso de ser .xlsx solo debe tener información en un sheet. El archivo debe tener las siguientes columnas:
 
@@ -78,7 +78,7 @@ Output:
     --sep SEP          Separador del archivo
 ```
 ## Datos
-Para armar el database y correr el pipeline hay que descargar los datos en [este link]([lhco2020.github.io/homepage/](https://drive.google.com/drive/folders/1Rsq-HHomPtQwy7RIWQ574wKcf56LiGq1)) y ponerlos en la carpeta `datasets`.
+Para armar el database y correr el pipeline hay que descargar los datos en [este link](https://drive.google.com/drive/folders/1Rsq-HHomPtQwy7RIWQ574wKcf56LiGq1) y ponerlos en la carpeta `datasets`.
 # Licencia <a name="license"></a>
 
 El uso de este trabajo está licenciado bajo [GNU General Public License v3.0 (GNU GPLv3)](https://choosealicense.com/licenses/gpl-3.0/)
